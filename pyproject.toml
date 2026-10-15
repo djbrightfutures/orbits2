@@ -1,7 +1,7 @@
 [project]
 name = "orbits2"
-version = "2.0.0"
-description = "Hands before the model. One orbit file every brain can resume."
+version = "2.1.0"
+description = "The pit. Hands before the model. One orbit file every brain can resume."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }

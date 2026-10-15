@@ -1,3 +1,3 @@
-"""Orbits 2. Hands before the model. One work log every brain can resume."""
+"""Orbits 2. The pit. Hands before the model. One orbit file every brain can resume."""
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"

@@ -11,6 +11,7 @@ import shlex
 import shutil
 import socket
 import subprocess
+import sys
 from pathlib import Path
 
 _RUN = None  # tests can replace the runner
@@ -57,6 +58,8 @@ def hands(text: str) -> str | None:
         free = usage.free / (1024 ** 3)
         total = usage.total / (1024 ** 3)
         return f"{free:.1f} GB free of {total:.1f} GB"
+    if cmd == "python" and not rest:
+        return sys.version.split()[0]
     if cmd == "list" and rest:
         folder = Path(rest.strip('"'))
         if not folder.is_dir():

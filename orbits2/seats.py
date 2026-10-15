@@ -67,13 +67,34 @@ def key_for(name: str) -> str:
     return ""
 
 
+def is_dark(text: str) -> bool:
+    return str(text or "").startswith("seat dark:")
+
+
 def messages(ask: str, recent: list[dict]) -> list[dict]:
-    """The ask, plus the orbit tail so the next brain can continue the work."""
+    """The ask, plus the orbit tail so the next brain can continue the work.
+
+    Other racers on a duel or a relay are included as they answered. The
+    winning line is not rewritten, and it is not pasted a second time.
+    """
     body: list[dict] = []
     if recent:
         lines = []
         for row in recent:
+            if not isinstance(row, dict):
+                continue
             lines.append(f"- {row.get('seat')}: {row.get('ask')} -> {row.get('did')}")
+            main = str(row.get("did") or "")
+            racers = row.get("racers") or []
+            if not isinstance(racers, list):
+                continue
+            for racer in racers[:8]:
+                if not isinstance(racer, dict):
+                    continue
+                bit = str(racer.get("did") or "")
+                if not bit or bit == main:
+                    continue
+                lines.append(f"  - {racer.get('seat')}: {bit[:500]}")
         body.append({
             "role": "system",
             "content": "Recent orbit, oldest first. Continue this work.\n" + "\n".join(lines),
